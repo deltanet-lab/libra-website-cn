@@ -3,7 +3,7 @@ id: libra-open-source-paper
 title: 开源Libra
 ---
 
-[Libra区块链](https://developers.libra.org/docs/the-libra-blockchain-paper)构建于开源软件之上。 Libra协议的第一个实现 - 区块链背后的技术 - 是Libra Core，它是一个由[Libra协会](https://libra.org/en-us/association-council-principles)管理的[开源项目](https://github.com/libra/libra)，使用开源社区的开发实践。以这种方式开发Libra区块链背后的技术可确保每个人都可以访问区块链，并且技术决策是公正透明的。
+[Libra区块链](the-libra-blockchain-paper.md)构建于开源软件之上。 Libra协议的第一个实现 - 区块链背后的技术 - 是Libra Core，它是一个由[Libra协会](https://libra.org/en-us/association-council-principles)管理的[开源项目](https://github.com/libra/libra)，使用开源社区的开发实践。以这种方式开发Libra区块链背后的技术可确保每个人都可以访问区块链，并且技术决策是公正透明的。
 
 开源软件是任何人都可以使用，检查和修改的软件。在开源软件上构建Libra Core意味着人们可以以新颖的方式使用Libra区块链。这意味着开发人员可以构建支持区块链的新应用程序，并在任何类型的设备上运行这些应用程序。这意味着公众可以检查区块链的工作方式，从而使每个人都平等地了解代码的内部运作方式。这也意味着安全研究人员社区可以一起工作，以使区块链更加安全。Libra协会致力于确保Libra协议规范和Libra核心始终是开源的。
 
@@ -39,7 +39,7 @@ Apache许可证和CLA在开源开发人员社区中拥有悠久的历史。来�
 
 ## 下一步计划？
 
-Libra协会管理着Libra区块链背后的技术。Libra区块链背后的技术治理将随着时间而发展。该协会的首要目标是为Libra Core做好启动Libra区块链的准备，并创建正式的Libra协议规范。在此发布之前，社区必须有机会回顾已做出的决定，以确保确实做出了最佳技术选择。在网络启动之前，该协会致力于建立一个公平，透明的流程，以接受Libra区块链的技术变更。包括Facebook或Calibra在内的任何一家公司都无法确定区块链的未来发展。该协会致力于建立一个强大的社区，指导该技术的发展，使其可以作为数十亿人的金融基础设施。
+Libra协会管理着Libra区块链背后的技术。Libra区块链背后的技术治理将随着时间而发展。该协会的首要目标是为Libra Core做好启动Libra区块链的准备，并创建正式的Libra协议规范。在此发布之前，社区必须有机会回顾已做出的决定，以确保确实做出了最佳技术选择。在网络启动之前，该协会致力于建立一个公平，透明的流程，以接受Libra区块链的技术变更。包括Facebook或Calibra在内的任何一家公司都无法单独决定Libra区块链的未来发展。该协会致力于建立一个强大的社区，指导该技术的发展，使其可以作为数十亿人的金融基础设施。
 
 随着项目的发展，生态系统的治理也将随之发展。协会可以创建流程，以便重要的技术更改可以通过更正式的审核流程。该协会将与社区合作，寻找方法来加强其对开源和开放治理的承诺。
 

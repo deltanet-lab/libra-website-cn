@@ -287,11 +287,11 @@ Transaction failed with vm status: Validation(SendingAccountDoesNotExist("sender
 
 ```
 
-A compiled module contains the address of the account where the module is to be published, and the [Move Virtual Machine (VM)](https://developers.libra.org/docs/crates/vm) only allows a transaction sender to publish a module under the sender’s own account address. If this was not true, another user could publish modules under your account! To fix this error, recompile the module using the desired sender address.
+A compiled module contains the address of the account where the module is to be published, and the [Move Virtual Machine (VM)](crates/vm.md) only allows a transaction sender to publish a module under the sender’s own account address. If this was not true, another user could publish modules under your account! To fix this error, recompile the module using the desired sender address.
 
 If you do not provide the correct path to your compiled module, you'll see this error:
 
-编译后的模块包含要在其中发布该模块的帐户的地址，[Move虚拟机（VM）](https://developers.libra.org/docs/crates/vm)仅允许事务发送方执行以下操作：在发件人自己的帐户地址下发布模块。如果不是这样，其他用户可以在您的帐户下发布模块！ 要解决此错误，请使用所需的发送者地址重新编译模块。
+编译后的模块包含要在其中发布该模块的帐户的地址，[Move虚拟机（VM）](crates/vm.md)仅允许事务发送方执行以下操作：在发件人自己的帐户地址下发布模块。如果不是这样，其他用户可以在您的帐户下发布模块！ 要解决此错误，请使用所需的发送者地址重新编译模块。
 
 如果您没有提供编译模块的正确路径，则会看到此错误：
 
@@ -337,9 +337,9 @@ Transaction failed with vm status: Verification([Script(TypeMismatch("Actual Typ
 * [Getting Started with Move](move-overview.md) &mdash; Introduces you to Move, a new blockchain programming language.
 * [Move Technical Paper](move-paper.md).
 * Move READMEs:
-    * [Move Language](https://developers.libra.org/docs/crates/move-language).
-    * [Move IR Compiler](https://developers.libra.org/docs/crates/ir-to-bytecode).
+    * [Move Language](crates/move-language.md).
+    * [Move IR Compiler](crates/ir-to-bytecode.md).
     * [Bytecode Verifier](https://l.facebook.com/l.php?u=https%3A%2F%2Fdevelopers.libra.org%2Fdocs%2Fcrates%2Fbytecode-verifier&h=AT22hXPt7Fjx80GBMVQ5NOZaVAvQRzD-W4QLZK3j44-Jk11H7EzR7RpTqJpaWX0FMSWFcMdhlvfSTw7TVYk15xAC2fd520s8erlICkc4F_AMTOWrMowCqqG5Qv8RLXROLXZ1MTxGMGq4L1J7czZSas5l).
-    * [Virtual Machine](https://developers.libra.org/docs/crates/vm).
+    * [Virtual Machine](crates/vm.md).
 * [CLI Guide](reference/libra-cli.md) — Lists the commands of the Libra CLI client.
 * [My First Transaction](my-first-transaction.md) &mdash; Guides you through executing your very first transaction on the Libra Blockchain using the Libra CLI client.
