@@ -34,11 +34,11 @@ const siteConfig = {
 
   // links that will be used in the header navigation bar
   headerLinks: [
-    {doc: 'welcome-to-libra', label: 'Documentation'},
-    {href: 'https://community.libra.org', label: 'Community'},
-    {blog: true, label: "Blog" },
-    {href: 'https://libra.org', label: 'libra.org'},
-    {href: 'https://github.com/libra/libra', label: 'GitHub'},
+    {doc: 'welcome-to-libra', label: '文档'},
+    {href: 'https://community.libra.org', label: '社区'},
+    {blog: true, label: "博客" },
+    {href: 'https://libra.org', label: '官网'},
+    {href: 'https://github.com/libra/libra', label: '源码'},
     // {search: false}, // position search box to the very right
     {languages: true}
   ],

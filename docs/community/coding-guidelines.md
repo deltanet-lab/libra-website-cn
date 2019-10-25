@@ -1,24 +1,19 @@
 ---
 id: coding-guidelines
-title: Coding Guidelines
+title: 编码规范
 ---
 
-
-This document describes the coding guidelines for the Libra Core Rust codebase.
-
-本文档介绍了Libra Core Rust代码库的编码准则。
+本文档介绍了Libra Core的Rust代码编码规范。
 
 ## 编码格式
 
-All code formatting is enforced with [rustfmt](https://github.com/rust-lang/rustfmt) with a project-specific configuration.  Below is an example command to adhere to the Libra Core project conventions.
-
-使用[rustfmt](https://github.com/rust-lang/rustfmt)进行代码格式化，且具有特定于项目的配置。以下是遵守Libra Core项目约定的示例命令。
+所有代码格式使用[rustfmt](https://github.com/rust-lang/rustfmt)进行格式化，且具有特定于项目的配置。以下是遵守Libra Core项目约定的示例命令。
 
 ```
 libra$ cargo fmt
 ```
 
-## Code analysis
+## 代码分析（Code analysis）
 
 [Clippy](https://github.com/rust-lang/rust-clippy)用于捕获常见错误，并作为持续集成的一部分运行。在提交代码进行审核之前，您可以使用我们的配置运行clippy：
 
@@ -28,7 +23,7 @@ libra$ ./scripts/clippy.sh
 
 通常，我们遵循[rust-lang-nursery](https://rust-lang-nursery.github.io/api-guidelines/about.html)中的建议。 本指南的其余部分提供了有关特定主题的详细指南，以实现代码库的统一性。
 
-## Code documentation
+## 代码文档（Code documentation）
 
 Any public fields, functions, and methods should be documented with [Rustdoc](https://doc.rust-lang.org/book/ch14-02-publishing-to-crates-io.html#making-useful-documentation-comments).
 
@@ -60,11 +55,11 @@ struct Point {
 }
 ```
 
-### Constants and fields
+### 常量与字段（Constants and fields）
 
 Describe the purpose and definition of this data.
 
-### Functions and methods
+### 方法与函数（Functions and methods）
 
 Document the following for each function:
 
@@ -150,15 +145,14 @@ Refer to the Libra Project License [LINK].
 
 A good example of README.md is `libra/network/README.md` that describes the networking crate.
 
-## Code suggestions
+## 编码建议（Code suggestions）
 
 In the following sections, we have suggested some best practices for a uniform codebase. We will investigate and identify the practices that can be enforced using Clippy. This information will evolve and improve over time.
 
 在以下各节中，我们为统一代码库提出了一些最佳实践。我们将调查并确定可以使用Clippy实施的实践。随着时间的流逝，这些信息将不断发展和完善。
 
-### Attributes
+### 属性（Attributes）
 
-Make sure to use the appropriate attributes for handling dead code:
 确保使用适当的属性来处理无效代码：
 
 ```
@@ -169,15 +163,17 @@ Make sure to use the appropriate attributes for handling dead code:
 #[cfg(test)]
 ```
 
-### Avoid Deref polymorphism
+### 避免Deref多态（Avoid Deref polymorphism）
 
-Don't abuse the Deref trait to emulate inheritance between structs, and thus reuse methods.  For more information, read [here](https://github.com/rust-unofficial/patterns/blob/master/anti_patterns/deref.md).
+不要滥用Deref特性来模拟结构之间的继承，从而重用方法。有关更多信息，请阅读[这里](https://github.com/rust-unofficial/patterns/blob/master/anti_patterns/deref.md)。
 
-### Comments
+### 注释（Comments）
 
 We recommend that you use `//` and `///` comments rather than block comments `/* ... */` for uniformity and simpler grepping.
 
-### Cloning
+我们建议您使用`//`和`///`注释，而不是使用块注释`/ * ... * /`来保证一致性和更简单的搜索。
+
+### 克隆（Cloning）
 
 If `x` is reference counted, prefer [`Arc::clone(x)`](https://doc.rust-lang.org/std/sync/struct.Arc.html) over `x.clone()`. [`Arc::clone(x)`](https://doc.rust-lang.org/std/sync/struct.Arc.html) explicitly indicates that we are cloning `x`. This avoids confusion about whether we are performing an expensive clone of a `struct`, `enum`, other types, or just a cheap reference copy.
 
@@ -188,7 +184,7 @@ Also, if you are passing around [`Arc<T>`](https://doc.rust-lang.org/std/sync/st
 pub struct Foo(Arc<FooInner>);
 ```
 
-### Concurrent types
+### 并发类型（Concurrent types）
 
 Concurrent types such as [`CHashMap`](https://docs.rs/crate/chashmap), [`AtomicUsize`](https://doc.rust-lang.org/std/sync/atomic/struct.AtomicUsize.html), etc. have an immutable borrow on self i.e. `fn foo_mut(&self,...)` in order to support concurrent access on interior mutating methods. Good practices (such as those in the examples mentioned) avoid exposing synchronization primitives externally (e.g. `Mutex`, `RwLock`) and document the method semantics and invariants clearly.
 
@@ -200,9 +196,11 @@ Listed below are high-level suggestions based on experience:
 
 * Concurrent types (e.g. such as [`CHashMap`](https://docs.rs/crate/chashmap) or structs that have interior mutability building on [`Mutex`](https://doc.rust-lang.org/std/sync/struct.Mutex.html), [`RwLock`](https://doc.rust-lang.org/std/sync/struct.RwLock.html), etc.) are better suited for caches and states.
 
-### Error handling
+### 错误处理（Error handling）
 
 Error handling suggestions follow the [Rust book guidance](https://doc.rust-lang.org/book/ch09-00-error-handling.html).  Rust groups errors into two major categories: recoverable and unrecoverable errors.  Recoverable errors should be handled with [Result](https://doc.rust-lang.org/std/result/).  Our suggestions on unrecoverable errors are listed below:
+
+错误处理建议遵循[Rust book guidance](https://doc.rust-lang.org/book/ch09-00-error-handling.html)。Rust将错误分为两大类：可恢复错误和不可恢复错误。可恢复的错误应使用[结果](https://doc.rust-lang.org/std/result/)处理。下面列出了有关不可恢复错误的建议：
 
 *Panic*
 
@@ -212,7 +210,15 @@ Error handling suggestions follow the [Rust book guidance](https://doc.rust-lang
 * `assert!()` - This macro is kept in both debug/release and should be used to protect invariants of the system as necessary
 * `unreachable!()` - This macro will panic on code that should not be reached (violating an invariant) and can be used where appropriate.
 
-### Generics
+*Panic*
+
+* `panic!()` - 运行时紧急！仅在无法处理结果状态时才应使用。不应将其用于任何可恢复的错误。
+* `unwrap()` - 只能用于互斥锁（例如`lock().unwrap()`）和测试代码。对于所有其他用例，建议使用`expect()`。唯一的例外是错误消息是自定义生成的，在这种情况下，请使用`.unwrap_or_else(|| panic!("error: {}", foo))`。
+* `expect()` - 当期望保留系统不变式时，应调用Expect。 `expect()`优于`unwrap()`，并且在大多数情况下应包含有关失败的详细错误消息。
+* `assert!()` - 此宏保留在调试/发行版中，应根据需要用于保护系统的不变性
+* `unreachable!()` - 此宏将对不应该到达的代码（违反不变式）感到恐慌，并可以在适当的地方使用。
+
+### 泛型（Generics）
 
 Generics allow dynamic behavior (similar to [`trait`](https://doc.rust-lang.org/book/ch10-02-traits.html) methods) with static dispatch.  As the number of generic type parameters increase, the difficulty of using the type/method also increases (e.g. consider the combination of trait bounds required for this type, duplicate trait bounds on related types, etc.).  In order to avoid this complexity, we generally try to avoid using a large number of generic type parameters.  We have found that converting code with a large number of generic objects to trait objects with dynamic dispatch often simplifies our code.
 
@@ -224,7 +230,7 @@ Excluding test code, set field visibility to private as much as possible. Privat
 
 Public fields are most appropriate for [`struct`](https://doc.rust-lang.org/book/ch05-00-structs.html) types in the C spirit: compound, passive data structures without internal invariants.  Naming suggestions follow the guidance [here](https://rust-lang-nursery.github.io/api-guidelines/naming.html#getter-names-follow-rust-convention-c-getter) as shown below.
 
-除测试代码外，请将字段可见性设置为私有。私有字段允许构造函数强制执行内部不变式。为消费者可能需要的数据实现吸气剂，但除非必要的可变状态，否则避免使用吸气剂。
+除测试代码外，请将字段可见性设置为私有。私有字段允许构造函数强制执行内部不变性。为消费者可能需要的数据实现getters，但除非可变状态是必要的，否则避免使用setters。
 
 在C语言中，公共字段最适合[`struct`](https://doc.rust-lang.org/book/ch05-00-structs.html)类型：复合，无源数据结构，没有内部不变量。命名建议遵循[此处](https://rust-lang-nursery.github.io/api-guidelines/naming.html#getter-names-follow-rust-convention-c-getter)的指导，如下所示。
 
@@ -259,7 +265,7 @@ impl Foo {
 }
 ```
 
-### Logging
+### 日志（Logging）
 
 We currently use [slog](https://docs.rs/slog/) for logging.
 
@@ -271,13 +277,13 @@ We currently use [slog](https://docs.rs/slog/) for logging.
 
 我们目前使用[slog](https://docs.rs/slog/)进行日志记录。
 
-* [错误！](https://docs.rs/slog/2.4.1/slog/macro.error.html) - 错误级消息在[slog](https://docs.rs/slog/)中具有最高紧急度。发生意外错误（例如，超出了可完成RPC的最大重试次数或无法将数据存储到本地存储）。
-* [警告！](https://docs.rs/slog/2.4.1/slog/macro.warn.html) - 警告级别的消息有助于通知管理员有关自动处理的问题（例如重试失败的网络连接或接收多次重复相同的消息，依此类推）。
+* [error！](https://docs.rs/slog/2.4.1/slog/macro.error.html) - 错误级消息在[slog](https://docs.rs/slog/)中具有最高紧急度。发生意外错误（例如，超出了可完成RPC的最大重试次数或无法将数据存储到本地存储）。
+* [warn！](https://docs.rs/slog/2.4.1/slog/macro.warn.html) - 警告级别的消息有助于通知管理员有关自动处理的问题（例如重试失败的网络连接或接收多次重复相同的消息，依此类推）。
 * [info！](https://docs.rs/slog/2.4.1/slog/macro.info.html) - 信息级消息非常适合“一次性”事件（例如，时间启动和关闭）或不经常发生的周期性事件 - 例如每天更改验证器集。
 * [debug！](https://docs.rs/slog/2.4.1/slog/macro.debug.html) - 调试级别的消息可能会频繁发生（例如，每秒可能有1条以上的消息），通常不会出现在生产中启用。
 * [trace！](https://docs.rs/slog/2.4.1/slog/macro.trace.html) - 跟踪级别的日志记录通常仅用于函数进入/退出。
 
-### Testing
+### 测试（Testing）
 
 *Unit tests*
 
@@ -307,26 +313,42 @@ Some examples of properties tested in Libra:
 
 A tutorial for `proptest` can be found in the [`proptest` book](https://altsysrq.github.io/proptest-book/proptest/getting-started.html).
 
-References:
+*基于属性的测试*
 
-* [What is Property Based Testing?](https://hypothesis.works/articles/what-is-property-based-testing/) (includes a comparison with fuzzing)
-* [An introduction to property-based testing](https://fsharpforfunandprofit.com/posts/property-based-testing/)
-* [Choosing properties for property-based testing](https://fsharpforfunandprofit.com/posts/property-based-testing-2/)
+Libra使用[`proptest`框架](https://github.com/AltSysrq/proptest)以Rust编写的[基于属性的测试](https://blog.jessitron.com/2013/04/25/property-based-testing-what-is-it/)。基于属性的测试会生成随机的测试用例，并断言不变性（也称为*属性*）适用于被测试的代码。
 
-*Conditional compilation of tests*
+在Libra中一些基于属性的测试的示例：
+
+* 每对串行器和解串器对都通过随机输入串行器的正确性进行测试。彼此相反的任何一对函数都可以通过这种方式进行测试。
+* 使用随机生成的场景测试通过VM执行公共事务的结果，并使用*oracle*进行验证。
+
+可以在[`proptest`书](https://altsysrq.github.io/proptest-book/proptest/getting-started.html)中找到有关`proptest`的指南。
+
+参考资料:
+
+* [什么是基于属性的测试？](https://hypothesis.works/articles/what-is-property-based-testing/) (包含与模糊测试的比较)
+* [基于属性的测试的介绍](https://fsharpforfunandprofit.com/posts/property-based-testing/)
+* [为基于属性的测试选择属性](https://fsharpforfunandprofit.com/posts/property-based-testing-2/)
+
+*测试的条件编译*
 
 Libra [conditionally compiles](https://doc.rust-lang.org/stable/reference/conditional-compilation.html) code that is *only relevant for tests, but does not consist of tests* (unitary or otherwise). Examples of this include proptest strategies, implementations and derivations of specific traits (e.g. the occasional `Clone`), helper functions, etc. Since Cargo is [currently not equipped for activating features in benchmarks](https://github.com/rust-lang/cargo/issues/2911), we rely on two conditions to perform this conditional compilation:
 - the test flag, which is activated by dependent test code in the same crate as the conditional test-only code.
 - the "testing" custom feature, activated by dependent test code in another crate as the conditional test-only code (as below).
 
-As a consequence, it is recommended that you set up your test-only code in the following fashion. For the sake of example, we'll consider you are defining a test-only helper function `foo` in `foo_crate`:
-1. Define the "testing" flag in `foo_crate/Cargo.toml` and make it non-default:
+Libra的[条件编译](https://doc.rust-lang.org/stable/reference/conditional-compilation.html)代码*仅与测试相关，但不包含测试*（单一或其他）。 这样的例子包括抗议策略，特定特征的实现和派生（例如，偶尔的“克隆”），辅助功能等。由于Cargo [当前不具备激活基准测试中的功能的能力](https://github.com/rust-lang/cargo/issues/2911)，我们依靠两个条件来执行此条件编译：
+- 测试标志，由相关的测试代码以与有条件的仅测试代码相同的方式激活。
+- “测试”自定义功能，由另一个包装箱中的相关测试代码作为有条件的仅测试代码激活（如下所示）。
+
+因此，建议您以以下方式设置测试代码。为了举例说明，我们将考虑在`foo_crate`中定义测试用的辅助函数`foo`：
+1. 在`foo_crate/Cargo.toml`中定义“testing”标志，并将其设置为非默认值：
     ```
     [features]
     default = []
     testing = []
     ```
 2. Annotate your test-only helper `foo` with both the `test` flag (for in-crate callers) and the `"testing"` custom feature (for out-of-crate callers):
+使用`test`标志（适用于板条内调用方）和`“ testing”`自定义功能（适用于板条框外调用方）为仅测试助手`foo`加上注释：
     ```
     #[cfg(any(test, feature = "testing"))]
     fn foo() { ... }
@@ -344,6 +366,7 @@ As a consequence, it is recommended that you set up your test-only code in the f
     struct Foo { ... }
     ```
 5. (optional) Set up feature transitivitity for crates that call crates that have test-only members. Let's say it's the case of `bar_crate`, which, through its test helpers, calls into `foo_crate` to use your test-only `foo`. Here's how you would set up `bar_crate/Cargo.toml`:
+（可选）为包装箱设置功能可传递性，该包装箱调用具有仅测试成员的包装箱。假设是bar_crate的情况，它通过其测试帮助程序调用foo_crate来使用仅用于测试的foo。这是设置`bar_crate/Cargo.toml`的方法：
     ```
     [features]
     default = []
@@ -352,8 +375,12 @@ As a consequence, it is recommended that you set up your test-only code in the f
 
 *A final note on integration tests*: All tests that use conditional test-only elements in another crate need to activate the "testing" feature through the `[features]` section in their `Cargo.toml`. [Integration tests](https://doc.rust-lang.org/rust-by-example/testing/integration_testing.html) can neither rely on the `test` flag nor do they have a proper `Cargo.toml` for feature activation. In the Libra codebase, we therefore recommend that *integration tests which depend on test-only code in their tested crate* be extracted to their own crate. You can look at `language/vm/serializer_tests` for an example of such an extracted integration test.
 
+*关于集成测试的最后说明*：所有在另一个包装箱中使用有条件的仅测试元素的测试都需要通过其Cargo.toml中的[features]部分激活“测试”功能。[集成测试](https://doc.rust-lang.org/rust-by-example/testing/integration_testing.html)既不能依靠`test`标志，也不能拥有适当的`Cargo.toml` 功能激活。因此，在Libra代码库中，我们建议将*依赖于其测试箱中仅测试代码的集成测试*提取到其自己的箱中。您可以在`language/vm/serializer_tests`中查看有关提取的集成测试的示例。
+
 *Note for developers*: The reason we use a feature re-export (in the `[features]` section of the `Cargo.toml` is that a profile is not enough to activate the `"testing"` feature flag. See [cargo-issue #291](https://github.com/rust-lang/cargo/issues/2911) for details).
 
-*Fuzzing*
+*开发人员注意*：我们使用功能重新导出的原因（在Cargo.toml的`[features]`部分中，原因是配置文件不足以激活`"testing"`功能标记。请参阅[cargo-issue＃291](https://github.com/rust-lang/cargo/issues/2911)了解详情）。
 
-Libra contains harnesses for fuzzing crash-prone code like deserializers, using [`libFuzzer`](https://llvm.org/docs/LibFuzzer.html) through [`cargo fuzz`](https://rust-fuzz.github.io/book/cargo-fuzz.html). For more examples, see the `testsuite/libra_fuzzer` directory.
+*模糊测试*
+
+Libra包含用于对诸如反序列化之类的容易崩溃的代码进行模糊处理的工具，它们使用[`cargo fuzz`](https://rust-fuzz.github.io/book/cargo-fuzz.html)命令调用[`libFuzzer`](https://llvm.org/docs/LibFuzzer.html)。 有关更多示例，请参见`testsuite/libra_fuzzer`目录。
