@@ -90,10 +90,11 @@ A **client** is a piece of software that has the capability to interact with the
 * 共识组件负责协商所有验证器节点The consensus component is responsible for coordination and agreement amongst all validators on the block of transactions to be executed, their order, and the execution results.
 * The Libra Blockchain is formed with these agreed-upon transactions and their corresponding execution results.
 
-### 共识协议（Consensus Protocol）
+### 共识协议
 
 * A **consensus protocol** is collectively executed by n validator nodes to accept or reject a transaction and to agree on the ordering of transactions and [execution results](#execution-result).
-* See [BFT](#byzantine-fault-tolerance-bft)
+* **共识协议**是指由一组（n个）验证者节点共同执行一个交易集合，以接受或拒绝交易，并就全部交易的执行顺序和[执行结果](#执行结果)达成一致。
+* 参考 [BFT](#byzantine-fault-tolerance-bft)
 
 ### 托管钱包（Custodial Wallet）
 
@@ -138,7 +139,7 @@ A **client** is a piece of software that has the capability to interact with the
 * 在libra协议中，事件提供了成功执行交易导致特定效果的证据。`ReceivedPaymentEvent`（在上面的示例中）允许收件人确认他们的帐户中收到了付款。
 * 事件在区块链上持久化，用于回答[客户端](#client)的查询。
 
-### 执行结果（Execution Result）
+### 执行结果
 
 * 一个交易的执行结果是如下的组合:
     * 受交易影响的账户集的新状态。
